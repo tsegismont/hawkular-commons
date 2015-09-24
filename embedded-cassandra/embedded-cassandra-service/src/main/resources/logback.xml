@@ -17,6 +17,15 @@
 
 -->
 <configuration debug="false" scan="false">
+  <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>WARN</level>
+    </filter>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>%-5level [%logger] %message%n</pattern>
+    </encoder>
+  </appender>
+
   <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>${jboss.server.log.dir}/embedded-cassandra.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -28,6 +37,7 @@
   </appender>
 
   <root level="${hawkular.log.cassandra:-INFO}">
+    <appender-ref ref="stdout"/>
     <appender-ref ref="file"/>
   </root>
 </configuration>
